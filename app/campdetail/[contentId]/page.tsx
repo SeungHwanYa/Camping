@@ -45,19 +45,17 @@ export default function CampingSiteDetail() {
       setSession(session);
     };
     fetchSession();
-    const URL = `http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=${process.env.NEXT_PUBLIC_GOCAMPING}&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json`;
 
     const fetchData = () => {
-      fetch(URL)
+      fetch(`/api/data/load?contentId=${contentId}`)
         .then((response) => response.json())
         .then((result) => {
-          if (result.response.body.items.item) {
-            const items = result.response.body.items.item;
-            const item = items.find(
-              (item: CampingSite) => item.contentId === contentId
-            );
-            if (item) {
-              setData(item);
+          if (result) {
+            const items: CampingSite = result;
+            console.log(items, "확인");
+
+            if (items) {
+              setData(items);
             }
           }
         })
@@ -88,7 +86,6 @@ export default function CampingSiteDetail() {
         <p className="pb-1">
           홈페이지:
           <Link href={data.homepage} className="text-blue-500">
-            {" "}
             {data.homepage}
           </Link>
         </p>

@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 interface CampingSite {
   facltNm: string;
@@ -23,17 +25,14 @@ export default function SearchPage() {
   const [data, setData] = useState<CampingSite[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  const URL = `http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=${process.env.NEXT_PUBLIC_GOCAMPING}`;
 
   useEffect(() => {
     if (region || doNm) {
       const fetchData = () => {
-        fetch(
-          `${URL}&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&`
-        )
+        fetch(`/api/data/camplist?region=${region}&doNm=${doNm}`)
           .then((response) => response.json())
           .then((result) => {
-            const items = result.response.body.items.item;
+            const items = result;
             console.log(items);
 
             let filteredData;
@@ -71,10 +70,25 @@ export default function SearchPage() {
           {data.map((item, index) => (
             <Link href={`/campdetail/${item.contentId}`} key={index}>
               <div key={index}>
-                <img src={item.firstImageUrl} alt={item.facltNm} />
+                {item.firstImageUrl ? (
+                  <div className="w-full">
+                    <img src={item.firstImageUrl} alt={item.facltNm} />
+                  </div>
+                ) : (
+                  <div className="w-full h-full">
+                    <FontAwesomeIcon
+                      className="w-full h-auto text-current"
+                      icon={faImage}
+                    />
+                  </div>
+                )}
                 <h1>{item.facltNm}</h1>
                 <p>주소: {item.addr1}</p>
-                <p>전화번호: {item.tel}</p>
+                {item.tel ? (
+                  <p>전화번호: {item.tel}</p>
+                ) : (
+                  <p>전화번호: 데이터가 없습니다. </p>
+                )}
               </div>
             </Link>
           ))}

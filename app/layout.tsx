@@ -77,7 +77,9 @@ export default async function RootLayout({
             <div>서비스 약관</div>
           </div>
           <div className="flex items-center justify-center gap-10 pt-5">
-            <FontAwesomeIcon icon={faGithub} className="w-8 h-8" />
+            <Link href={"https://github.com/SeungHwanYa/camping"}>
+              <FontAwesomeIcon icon={faGithub} className="w-8 h-8" />
+            </Link>
             <FontAwesomeIcon icon={faBookOpen} className="w-8 h-8" />
           </div>
           <div className="flex flex-col items-center justify-center pt-5">
