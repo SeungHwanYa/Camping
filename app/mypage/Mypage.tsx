@@ -1,5 +1,7 @@
 "use client";
 
+import Password_Modal from "../components/Password_Modal";
+
 interface MypageProps {
   user: {
     id: string;
@@ -10,25 +12,30 @@ interface MypageProps {
 
 export default function Mypage({ user }: MypageProps) {
   return (
-    <div className="flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full mx-auto p-6 bg-white rounded-lg shadow-lg my-44">
-        <div className="flex justify-center text-2xl text-orange-500 mb-10">
+    <div className="flex items-center justify-center bg-white p-8 ">
+      <div className="w-full px-8 bg-gray-50  pt-24 pb-52 rounded-3xl">
+        <div className="flex justify-center font-bold text-3xl text-gray-800 pb-24">
           내정보
         </div>
         <div>
-          <p className="pb-6 text-xl text-gray-600">아이디: {user.id}</p>
-          <p className="pb-6 text-xl text-gray-600">닉네임: {user.name}</p>
-          <p className="pb-6 text-xl text-gray-600">이메일: {user.email}</p>
-          <div className="flex pb-6 text-xl text-gray-600 gap-4">
+          <p className="pb-8 text-2xl text-gray-600 font-bold">
+            아이디: {user.id}
+          </p>
+          <p className="pb-8 text-2xl text-gray-600 font-bold">
+            닉네임: {user.name}
+          </p>
+          <p className="pb-8 text-2xl text-gray-600 font-bold">
+            이메일: {user.email}
+          </p>
+          <div className="flex items-center pb-6 text-2xl font-bold text-gray-600 gap-4">
             <p>비밀번호 변경:</p>
-            <p
-              onClick={() =>
-                (window.location.href = `/change_password/${user.name}`)
-              }
-              className="text-blue-500 cursor-pointer hover:font-bold transition duration-500"
+            <button
+              className="btn text-blue-600 font-bold cursor-pointer"
+              onClick={() => document.getElementById("my_modal_1").showModal()}
             >
               비밀번호 변경하기
-            </p>
+            </button>
+            <Password_Modal />
           </div>
         </div>
       </div>

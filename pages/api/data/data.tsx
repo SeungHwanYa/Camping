@@ -13,10 +13,8 @@ export default async function data() {
     }
 
     const apiResponse = await response.json();
-    console.log(apiResponse, "이거 뭐임");
 
     const items = apiResponse.response.body.items.item;
-    console.log(items, "이거 확인해바");
 
     await Promise.all(
       items.map(async (item) => {

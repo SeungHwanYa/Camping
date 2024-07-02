@@ -76,7 +76,7 @@ export default function Review_Write({
 
   return (
     <div className="w-full flex items-center justify-center my-4">
-      <div className="bg-gray-50 p-8 rounded-lg shadow-lg w-full">
+      <div className=" p-8  w-full">
         <h2 className="text-2xl font-bold mb-6">리뷰</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

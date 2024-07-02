@@ -286,9 +286,9 @@ export default function Home() {
   return (
     <div>
       <Induty />
-      <div className="px-2 py-20">
+      <div className="px-2 py-32">
         <select
-          className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-4 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-4 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-300"
           onChange={handleRegionChange}
           style={{
             backgroundImage: `url('data:image/svg+xml;utf8,<svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"></polyline>')`,
@@ -317,7 +317,7 @@ export default function Home() {
         </select>
 
         <select
-          className="mt-4 block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-4 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          className="mt-4 block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-4 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-orange-300"
           onChange={handleCityChange}
           value={selectedCity}
           style={{

@@ -22,6 +22,7 @@ const config: Config = {
         "240px": "240px",
         "320px": "320px",
         "640px": "640px",
+        "700px": "700px",
         "1000px": "1000px",
       },
       height: {
@@ -31,8 +32,14 @@ const config: Config = {
         "320px": "320px",
         "800px": "800px",
       },
+      scale: {
+        "175": "1.75",
+        "200": "2",
+        "250": "2.5",
+        "300": "3",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
 export default config;

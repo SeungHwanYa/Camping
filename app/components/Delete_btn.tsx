@@ -25,7 +25,9 @@ export default function Delete_btn({ reviewId, canDelete, onDelete }) {
       <button
         onClick={handleDelete}
         className={`${
-          canDelete ? "bg-orange-300 hover:bg-orange-600 text-white" : "hidden"
+          canDelete
+            ? "bg-orange-300 hover:bg-orange-400 text-white duration-300"
+            : "hidden"
         } py-1 px-3 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-sm`}
       >
         삭제

@@ -10,6 +10,8 @@
   font-style: normal;
 }
 
-* {
-  font-family: "DungGeunMo";
+.custom-info-window {
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 1rem !important;
 }

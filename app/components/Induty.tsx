@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function Induty() {
   return (
-    <div className="w-full flex justify-between justify-center pt-32">
+    <div className="w-full flex justify-between justify-center pt-32 px-8">
       <div>
         <Link href={"/indutylist?induty=자동차야영장"}>
           <button className="bg-orange-100 rounded-xl p-10 hover:bg-orange-300 ease-in duration-500 group">

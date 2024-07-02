@@ -12,7 +12,7 @@ interface Credentials {
   password: string;
 }
 
-const LoginPage: React.FC = () => {
+export default function LoginPage() {
   const [providers, setProviders] = useState(null);
   const [credentials, setCredentials] = useState<Credentials>({
     id: "",
@@ -51,14 +51,14 @@ const LoginPage: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full mx-auto p-6 bg-white rounded-lg shadow-lg">
         <Link href="/">
-          <div className="flex justify-center text-2xl text-orange-500 mb-10">
-            캠핑가자
+          <div className="flex justify-center text-3xl text-orange-500 mb-10">
+            Hi Camping
           </div>
         </Link>
         <form onSubmit={handleSubmit} className="space-y-6">
           <label
             htmlFor="id"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-lg font-medium text-gray-700"
           >
             아이디:
           </label>
@@ -72,7 +72,7 @@ const LoginPage: React.FC = () => {
           />
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-lg font-medium text-gray-700"
           >
             비밀번호:
           </label>
@@ -97,7 +97,7 @@ const LoginPage: React.FC = () => {
               provider.id !== "credentials" && (
                 <div key={provider.id}>
                   <button
-                    className="mt-2 w-full flex items-center justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                    className="my-2 w-full flex items-center justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                     onClick={() =>
                       signIn(provider.id, { redirect: true, callbackUrl: "/" })
                     }
@@ -107,9 +107,10 @@ const LoginPage: React.FC = () => {
                 </div>
               )
           )}
+        <div className="flex justify-end py-2.5 px-4 border border-transparent text-sm font-medium  hover:text-blue-700 duration-500 cursor-pointer">
+          <Link href="/register">회원가입</Link>
+        </div>
       </div>
     </div>
   );
-};
-
-export default LoginPage;
+}

@@ -11,7 +11,7 @@ export default function EditReview({ review, reviewId, contentId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await fetch("/api/post/edit", {
         method: "POST",
@@ -40,8 +40,8 @@ export default function EditReview({ review, reviewId, contentId }) {
   };
 
   return (
-    <div className="w-full flex items-center justify-center my-32">
-      <div className="bg-gray-50 p-8 rounded-lg shadow-lg w-full">
+    <div className="w-full flex items-center justify-center py-32">
+      <div className="bg-white p-8 w-full">
         <h4 className="text-3xl font-bold mb-6 text-center">리뷰 수정</h4>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
@@ -71,7 +71,7 @@ export default function EditReview({ review, reviewId, contentId }) {
               type="submit"
               className="w-full py-2 px-4 text-white font-medium text-lg rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
             >
-              리뷰 수정
+              수정
             </button>
           </div>
         </form>
