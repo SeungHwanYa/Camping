@@ -67,7 +67,11 @@ export default function Map({ location }: MapProps) {
   return (
     <div className="flex justify-center items-center p-4">
       <div id="map" className="w-full h-96">
-        {!isLoaded && <div>Loading map...</div>}
+        {!isLoaded && (
+          <div className="flex justify-center items-center pt-28">
+            <span className="loading loading-spinner loading-lg scale-200"></span>
+          </div>
+        )}
       </div>
     </div>
   );

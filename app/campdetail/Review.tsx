@@ -1,9 +1,9 @@
 import { useSession, signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
-import Delete_btn from "../components/Delete_btn";
-import Edit_btn from "../components/Edit_btn";
+import View_Review from "./View_Reaview";
 import Link from "next/link";
-import Review_Write from "./Review_Write";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 interface ReviewProps {
   contentId: string;
@@ -15,6 +15,8 @@ interface Review {
   review: string;
   email: string;
   createdAt: string;
+  likes: number;
+  dislikes: number;
 }
 
 export default function Review({ contentId }: ReviewProps) {
@@ -40,14 +42,6 @@ export default function Review({ contentId }: ReviewProps) {
     fetchReviews();
   }, [contentId]);
 
-  const handleNewReview = (newReview: Review) => {
-    setReviews([newReview, ...reviews]);
-  };
-
-  const handleDeleteReview = (reviewId: string) => {
-    setReviews(reviews.filter((review) => review._id !== reviewId));
-  };
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -58,38 +52,21 @@ export default function Review({ contentId }: ReviewProps) {
 
   return (
     <div>
-      <Review_Write
-        session={session}
-        contentId={contentId}
-        onReviewSubmitted={handleNewReview}
-      />
-      <div className="py-6 px-8">
-        <h3 className="text-xl font-bold pb-4">작성 리뷰</h3>
-        {reviews.map((review, index) => (
-          <div key={index} className="bg-gray-50 p-6 shadow mb-4">
-            <div className="flex justify-between border-b border-gray-200 pb-4">
-              <p className="text-gray-800 font-bold">{review.userId}</p>
-              <div>
-                <div className="text-gray-400 px-2 pb-2">
-                  {formatDate(review.createdAt)}
-                </div>
-                <div className="flex gap-2">
-                  <Delete_btn
-                    reviewId={review._id}
-                    canDelete={session?.user?.name === review.userId}
-                    onDelete={handleDeleteReview}
-                  />
-                  <Link href={`/edit_review/${review._id}`}>
-                    <Edit_btn canEdit={session?.user?.name === review.userId} />
-                  </Link>
-                </div>
-              </div>
+      <div className="flex px-10 pt-4 justify-between items-center">
+        <h3 className="text-2xl font-bold">리뷰</h3>
+        <div className="flex flex-col items-center">
+          <Link href={`/board?contentId=${contentId}`}>
+            <div className="font-bold text-gray-500 text-center hover:text-orange-400 duration-500">
+              더보기 <FontAwesomeIcon icon={faArrowRight} />
             </div>
-
-            <p className="py-8 text-lg text-gray-500">{review.review}</p>
-          </div>
-        ))}
+          </Link>
+        </div>
       </div>
+      <View_Review
+        reviews={reviews.slice(0, 3)}
+        formatDate={formatDate}
+        session={session}
+      />
     </div>
   );
 }
