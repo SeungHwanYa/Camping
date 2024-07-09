@@ -1,7 +1,9 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import Maps from "../components/Maps";
+import Campinglist from "../campdetail/Campinglist";
 
 interface CampingSite {
   facltNm: string;
@@ -12,68 +14,85 @@ interface CampingSite {
   doNm: string;
   mapX: number;
   mapY: number;
-  induty: string;
   [key: string]: any;
 }
+const PAGE_SIZE = 5;
 
-export default function SearchPage() {
+export default function IndutyListPage() {
   const searchParams = useSearchParams();
-  const induty = searchParams?.get("induty");
+  const induty = searchParams.get("induty");
 
-  const [data, setData] = useState<CampingSite[] | null>(null);
+  const [data, setData] = useState<CampingSite[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  const URL = `http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=${process.env.NEXT_PUBLIC_GOCAMPING}`;
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  const URL = `/api/data/camplist?induty=${induty}&page=${page}&pageSize=${PAGE_SIZE}`;
 
   useEffect(() => {
-    if (induty) {
-      const fetchData = () => {
-        fetch(
-          `${URL}&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&`
-        )
-          .then((response) => response.json())
-          .then((result) => {
-            const items = result.response.body.items.item;
-            console.log("Items:", items);
-            console.log("Induty:", induty);
+    const fetchData = () => {
+      fetch(URL)
+        .then((response) => response.json())
+        .then((result) => {
+          const items = Array.isArray(result) ? result : [];
+          console.log(items);
 
-            let filteredData = items.filter(
-              (item: CampingSite) => item.induty === induty
-            );
-            console.log("Filtered Data:", filteredData);
+          setData((prevData) => (page === 1 ? items : [...prevData, ...items]));
 
-            setData(filteredData);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.error("Error fetching data:", error);
-            setError(error as Error);
-            setLoading(false);
-          });
-      };
+          if (items.length < PAGE_SIZE) {
+            setHasMore(false);
+          } else {
+            setHasMore(true);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+          setError(error as Error);
+          setLoading(false);
+        });
+    };
 
-      fetchData();
-    }
-  }, [induty]);
+    fetchData();
+  }, [page, induty]);
 
-  if (loading) return <div>Loading...</div>;
+  const loadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-lg scale-200"></span>
+      </div>
+    );
   if (error) return <div>Error: {error.message}</div>;
 
+  const location = data.map((item) => ({
+    latitude: item.mapY,
+    longitude: item.mapX,
+    name: item.facltNm,
+    address: item.addr1,
+    contentId: item.contentId,
+  }));
+
   return (
-    <div>
-      {data && (
-        <div>
-          {data.map((item, index) => (
-            <Link href={`/campdetail/${item.contentId}`} key={index}>
-              <div key={index}>
-                <img src={item.firstImageUrl} alt={item.facltNm} />
-                <h1>{item.facltNm}</h1>
-                <p>주소: {item.addr1}</p>
-                <p>전화번호: {item.tel}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
+    <div className="pt-4 px-8">
+      {data.length > 0 ? (
+        <>
+          {location && <Maps location={location} />}
+          <Campinglist data={data} />
+          <div className="flex justify-center mt-4">
+            {hasMore && (
+              <button onClick={loadMore} className="btn btn-block mb-6">
+                더보기
+              </button>
+            )}
+          </div>
+        </>
+      ) : (
+        <div>데이터가 없습니다.</div>
       )}
     </div>
   );

@@ -6,6 +6,7 @@ export default function LoginBtn() {
   return (
     <>
       <button
+        className="font-bold"
         onClick={() => {
           signOut();
         }}

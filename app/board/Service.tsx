@@ -15,7 +15,7 @@ export default function Stars({ service }: StarsProps) {
   return (
     <div className="justify-end p-4 flex items-center">
       <h3 className="text-sm mr-2 font-bold text-gray-500">
-        전반적인 청결도는 어떠셨나요?
+        서비스&친철도는 어떠셨나요?
       </h3>
       <div className="flex items-center">
         <Rate

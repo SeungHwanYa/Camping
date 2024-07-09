@@ -82,11 +82,9 @@ export default function CampingSiteDetail() {
     <div>
       <Detail_Camp data={data} />
       {location && <Map location={location} />}
-      <div className="">
-        <SessionProvider session={session}>
-          <Review contentId={contentId} />
-        </SessionProvider>
-      </div>
+      <SessionProvider session={session}>
+        <Review contentId={contentId} />
+      </SessionProvider>
     </div>
   );
 }

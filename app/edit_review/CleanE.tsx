@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Rate from "rc-rate";
 import "rc-rate/assets/index.css";
 import {
@@ -8,11 +8,16 @@ import {
 } from "react-icons/ti";
 
 interface StarProps {
+  initialValue?: number;
   onChange?: (value: number) => void;
 }
 
-export default function Star({ onChange }: StarProps) {
-  const [value, setValue] = useState<number>(0);
+export default function Star({ initialValue = 0, onChange }: StarProps) {
+  const [value, setValue] = useState<number>(initialValue);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   const handleChange = (newValue: number) => {
     setValue(newValue);

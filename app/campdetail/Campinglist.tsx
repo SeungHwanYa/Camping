@@ -7,7 +7,7 @@ export default function Campinglist({ data }) {
     <div className="pt-4">
       {data.map((item, index) => (
         <Link href={`/campdetail/${item.contentId}`} key={index}>
-          <div className="border-b border-gray-300 pt-4 pb-4" key={index}>
+          <div className="border-t border-gray-300 pt-4 pb-4" key={index}>
             {item.firstImageUrl ? (
               <div className="w-full border-8 border-orange-500 rounded-3xl overflow-hidden">
                 <img src={item.firstImageUrl} alt={item.facltNm} />

@@ -21,8 +21,10 @@ const config: Config = {
         "160px": "160px",
         "240px": "240px",
         "320px": "320px",
+        "500px": "500px",
         "640px": "640px",
         "700px": "700px",
+        "800px": "800px",
         "1000px": "1000px",
       },
       height: {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import Rate from "rc-rate";
 import "rc-rate/assets/index.css";
 import {
@@ -8,11 +8,16 @@ import {
 } from "react-icons/ti";
 
 interface StarProps {
+  initialValue?: number;
   onChange?: (value: number) => void;
 }
 
-export default function Star({ onChange }: StarProps) {
+export default function Star({ initialValue = 0, onChange }: StarProps) {
   const [value, setValue] = useState<number>(0);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   const handleChange = (newValue: number) => {
     setValue(newValue);
@@ -25,7 +30,7 @@ export default function Star({ onChange }: StarProps) {
   return (
     <div className="p-4 flex items-center justify-end gap-4">
       <h3 className="text-lg font-bold text-gray-500">
-        전반적인 청결도는 어떠셨나요?
+        시설&편의성은 어떠셨나요?
       </h3>
       <div className="flex items-center">
         <Rate

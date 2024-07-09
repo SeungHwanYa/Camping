@@ -26,7 +26,9 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [page, setPage] = useState(1);
-  const [induty, setInduty] = useState<string | null>(null);
+  const [induty, setInduty] = useState<string | null>("");
+  const [hasMore, setHasMore] = useState(true);
+
   const URL = `/api/data/camplist?region=${region}&doNm=${doNm}&page=${page}&pageSize=${PAGE_SIZE}&induty=${
     induty || ""
   }`;
@@ -37,9 +39,7 @@ export default function SearchPage() {
         fetch(URL)
           .then((response) => response.json())
           .then((result) => {
-            const items = result;
-            console.log(items);
-
+            const items = Array.isArray(result) ? result : [];
             let filteredData;
             if (region === "전체") {
               filteredData = items.filter(
@@ -51,7 +51,15 @@ export default function SearchPage() {
               );
             }
 
-            setData((prevData) => [...prevData, ...filteredData]);
+            setData((prevData) =>
+              page === 1 ? filteredData : [...prevData, ...filteredData]
+            );
+
+            if (items.length < PAGE_SIZE) {
+              setHasMore(false);
+            } else {
+              setHasMore(true);
+            }
             setLoading(false);
           })
           .catch((error) => {
@@ -96,13 +104,21 @@ export default function SearchPage() {
         setData={setData}
         setInduty={setInduty}
       />
-      {location && <Maps location={location} />}
-      <Campinglist data={data} />
-      <div className="flex justify-center mt-4">
-        <button onClick={loadMore} className="btn btn-primary">
-          Load More
-        </button>
-      </div>
+      {data.length > 0 ? (
+        <>
+          {location && <Maps location={location} />}
+          <Campinglist data={data} />
+          <div className="flex justify-center mt-4">
+            {hasMore && (
+              <button onClick={loadMore} className="btn btn-block mb-6">
+                더보기
+              </button>
+            )}
+          </div>
+        </>
+      ) : (
+        <div>데이터가 없습니다.</div>
+      )}
     </div>
   );
 }

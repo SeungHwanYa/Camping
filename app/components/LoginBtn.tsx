@@ -1,17 +1,9 @@
-"use client";
+import React from "react";
 
-import { signIn } from "next-auth/react";
-
-export default function LoginBtn() {
+export default function LoginBtn({ onClick }: any) {
   return (
-    <>
-      <button
-        onClick={() => {
-          signIn();
-        }}
-      >
-        로그인
-      </button>
-    </>
+    <button className="font-bold" onClick={onClick}>
+      로그인
+    </button>
   );
 }

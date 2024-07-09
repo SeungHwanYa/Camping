@@ -1,13 +1,9 @@
-"use client";
+import React from "react";
 
-import Link from "next/link";
-
-export default function Regiterbtn() {
+export default function Regiterbtn({ onClick }: any) {
   return (
     <>
-      <Link href={"/register"}>
-        <button>회원가입</button>
-      </Link>
+      <button onClick={onClick}>회원가입</button>
     </>
   );
 }

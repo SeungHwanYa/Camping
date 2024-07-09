@@ -6,8 +6,11 @@ import {
   TiHeartHalfOutline,
   TiHeartOutline,
 } from "react-icons/ti";
+interface StarProps {
+  onChange?: (value: number) => void;
+}
 
-export default function Star({ onChange }) {
+export default function Star({ onChange }: StarProps) {
   const [value, setValue] = useState<number>(0);
 
   const handleChange = (newValue: number) => {

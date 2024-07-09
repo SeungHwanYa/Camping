@@ -1,9 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import CleanE from "./CleanE";
+import ServiceE from "./ServiceE";
+import ConvenienceE from "./ConvenienceE";
 
-export default function EditReview({ review, reviewId, contentId }) {
+export default function EditReview({
+  review,
+  reviewId,
+  contentId,
+  clean,
+  service,
+  convenience,
+}) {
   const [newReview, setNewReview] = useState(review);
+  const [newClean, setNewClean] = useState(clean);
+  const [newService, setNewService] = useState(service);
+  const [newConvenience, setNewConvenience] = useState(convenience);
 
   const handleCancel = () => {
     window.history.back();
@@ -22,6 +35,9 @@ export default function EditReview({ review, reviewId, contentId }) {
           _id: reviewId,
           review: newReview,
           contentId: contentId,
+          clean: newClean,
+          service: newService,
+          convenience: newConvenience ,
         }),
       });
 
@@ -44,11 +60,21 @@ export default function EditReview({ review, reviewId, contentId }) {
       <div className="bg-white p-8 w-full">
         <h4 className="text-3xl font-bold mb-6 text-center">리뷰 수정</h4>
         <form className="space-y-6" onSubmit={handleSubmit}>
+          <div className="bg-gray-50 rounded-xl p-4 mb-6">
+            <CleanE initialValue={newClean} onChange={setNewClean} />
+            <ServiceE initialValue={newService} onChange={setNewService} />
+            <ConvenienceE
+              initialValue={newConvenience}
+              onChange={setNewConvenience}
+            />
+          </div>
           <div>
             <label
               htmlFor="review"
               className="block text-sm font-medium text-gray-700"
-            ></label>
+            >
+              리뷰
+            </label>
             <textarea
               value={newReview}
               id="review"

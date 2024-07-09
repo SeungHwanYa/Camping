@@ -10,12 +10,13 @@ export default async function handler(req, res) {
   const { region, doNm, page = "1", pageSize = "5", induty } = req.query;
   const pageNum = parseInt(page as string, 10);
   const pageSizeNum = parseInt(pageSize as string, 10);
+  console.log(induty, "dasdasd");
 
   try {
     const db = (await connectDB).db("campdata");
     const collection = db.collection("campings");
     let query: Query = {};
-    if (region !== "전체") {
+    if (region && region !== "전체") {
       query.sigunguNm = region;
     }
     if (doNm) {
@@ -30,6 +31,7 @@ export default async function handler(req, res) {
       .skip((pageNum - 1) * pageSizeNum)
       .limit(pageSizeNum)
       .toArray();
+    console.log(campData, "safasfasfasf");
 
     if (campData.length > 0) {
       res.status(200).json(campData);

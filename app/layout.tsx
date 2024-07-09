@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Top_Btn from "./components/Top_btn";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default async function RootLayout({
         <div className="bg-gray-100">
           <Header />
           <main className="mx-auto w-700px bg-white">{children}</main>
+          <Top_Btn />
           <Footer />
         </div>
       </body>

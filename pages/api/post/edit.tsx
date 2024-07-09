@@ -4,15 +4,22 @@ import { ObjectId } from "mongodb";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
-      const { _id, review, contentId } = req.body;
+      const { _id, review, contentId, clean, service, convenience } = req.body;
 
-      if (!_id || !review || !contentId) {
+      if (
+        !_id ||
+        !review ||
+        !contentId ||
+        clean == null ||
+        service == null ||
+        convenience == null
+      ) {
         return res
           .status(400)
           .json({ message: "ID, 리뷰 내용 및 contentId가 필요합니다." });
       }
 
-      let edit = { review };
+      let edit = { review, clean, service, convenience };
       console.log("Received edit request:", edit);
 
       let db = (await connectDB).db("forum");
