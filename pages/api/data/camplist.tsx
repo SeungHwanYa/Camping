@@ -3,7 +3,7 @@ import { connectDB } from "@/util/database";
 interface Query {
   sigunguNm?: string;
   doNm?: string;
-  induty?: string;
+  induty?: { $in: string[] };
 }
 
 export default async function handler(req, res) {
@@ -23,7 +23,8 @@ export default async function handler(req, res) {
       query.doNm = doNm;
     }
     if (induty) {
-      query.induty = induty;
+      const indutyArray = (induty as string).split(",");
+      query.induty = { $in: indutyArray };
     }
 
     const campData = await collection

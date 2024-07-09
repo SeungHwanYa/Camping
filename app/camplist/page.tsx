@@ -26,15 +26,14 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [page, setPage] = useState(1);
-  const [induty, setInduty] = useState<string | null>("");
+  const [induty, setInduty] = useState<string[]>([]);
   const [hasMore, setHasMore] = useState(true);
 
-  const URL = `/api/data/camplist?region=${region}&doNm=${doNm}&page=${page}&pageSize=${PAGE_SIZE}&induty=${
-    induty || ""
-  }`;
-
+  const URL = `/api/data/camplist?region=${region}&doNm=${doNm}&page=${page}&pageSize=${PAGE_SIZE}&induty=${induty.join(
+    ","
+  )}`;
   useEffect(() => {
-    if (region || doNm) {
+    if (region || doNm || induty.length > 0) {
       const fetchData = () => {
         fetch(URL)
           .then((response) => response.json())
@@ -48,6 +47,12 @@ export default function SearchPage() {
             } else {
               filteredData = items.filter(
                 (item: CampingSite) => item.sigunguNm === region
+              );
+            }
+
+            if (induty.length > 0) {
+              filteredData = filteredData.filter((item: CampingSite) =>
+                induty.some((type) => item.induty.includes(type))
               );
             }
 
